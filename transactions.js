@@ -50,8 +50,15 @@ async function doTransaction(req, res) {
         }
 
         const success = performTransaction(fromAccountId, toAccountId, amount, sourceAccount, destAccount);
-
-        res.send("Success");
+        if (success) {
+            res.send(success);
+        }
+        else {
+            res.send({
+                errorCode: 402,
+                errorMessasge: "Error while performing transaction, please try again"
+            });
+        }
     } catch (error) {
         console.log("Error in Transaction")
         res.send({
